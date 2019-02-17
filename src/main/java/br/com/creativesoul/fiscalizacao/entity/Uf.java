@@ -1,5 +1,7 @@
 package br.com.creativesoul.fiscalizacao.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tb_uf")
-public class Uf {
+public class Uf implements Serializable {
 	
 private static final long serialVersionUID = 1L;
 	
@@ -19,10 +21,10 @@ private static final long serialVersionUID = 1L;
 	@Column(name = "id")	
 	public Long id;
 	
-	@Column(name = "sigla", length = 4, nullable = false, unique = true)
+	@Column(name = "sigla", length = 2, nullable = false, unique = true)
 	private String sigla;
 	
-	@Column(name = "nome", length = 100, nullable = false, unique = true)
+	@Column(name = "nome", nullable = false, unique = false)
 	private String nome;
 
 	public Long getId() {
@@ -89,7 +91,5 @@ private static final long serialVersionUID = 1L;
 			return false;
 		return true;
 	}
-	
-	
 
 }

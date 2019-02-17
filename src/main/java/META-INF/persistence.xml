@@ -8,6 +8,13 @@
 	<persistence-unit name="postgres-local">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		
+		<class>br.com.creativesoul.fiscalizacao.entity.Uf</class>
+		<class>br.com.creativesoul.fiscalizacao.entity.Cidade</class>
+		<class>br.com.creativesoul.fiscalizacao.entity.Bairro</class>
+		<class>br.com.creativesoul.fiscalizacao.entity.Empresa</class>
+		<class>br.com.creativesoul.fiscalizacao.entity.Erros</class>
+		<class>br.com.creativesoul.fiscalizacao.entity.Fiscalizacao</class>
+		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/creativesoul" />
@@ -15,8 +22,8 @@
 			<property name="javax.persistence.jdbc.password" value="costa291" />
 
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
-			<!-- <property name="hibernate.hbm2ddl.auto" value="update" /> -->
-			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+			 <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+			<!--  <property name="hibernate.hbm2ddl.auto" value="update" /> -->
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.default_schema" value="public" />

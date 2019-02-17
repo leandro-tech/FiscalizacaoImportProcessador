@@ -1,0 +1,4 @@
+select b.*, c.nome, u.sigla 
+from tb_bairro b
+ inner join tb_cidade c on (c.id = b.cidade_id)
+ inner join tb_uf u on (u.id = b.uf_id)
