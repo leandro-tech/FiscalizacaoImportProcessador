@@ -1,7 +1,7 @@
 package br.com.creativesoul.fiscalizacao.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,10 +22,10 @@ private static final long serialVersionUID = 1L;
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	@Column(name = "id")	
-	public Long id;
+	private Long id;
 	
 	@Column(name = "data", nullable = false)
-	private LocalDateTime data;
+	private LocalDate data;
 	
 	@Column(name = "razao", nullable = true, unique = false)
 	private String razao;
@@ -56,11 +56,11 @@ private static final long serialVersionUID = 1L;
 		this.id = id;
 	}
 
-	public LocalDateTime getData() {
+	public LocalDate getData() {
 		return data;
 	}
 
-	public void setData(LocalDateTime data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 

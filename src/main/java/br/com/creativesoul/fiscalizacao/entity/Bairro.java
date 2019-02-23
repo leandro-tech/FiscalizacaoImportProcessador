@@ -19,7 +19,7 @@ private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")	
-	public Long id;
+	private Long id;
 	
 	@Column(name = "nome", length = 120, nullable = false, unique = false)
 	private String nome;

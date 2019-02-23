@@ -7,7 +7,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		LeituraArquivo file = new LeituraArquivo();
-		file.persist();
+		file.read();
 		
 		System.exit(0);
 	}
