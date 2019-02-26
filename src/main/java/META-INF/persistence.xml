@@ -8,13 +8,6 @@
 	<persistence-unit name="postgres-local">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		
-		<class>br.com.creativesoul.fiscalizacao.entity.Uf</class>
-		<class>br.com.creativesoul.fiscalizacao.entity.Cidade</class>
-		<class>br.com.creativesoul.fiscalizacao.entity.Bairro</class>
-		<class>br.com.creativesoul.fiscalizacao.entity.Empresa</class>
-		<class>br.com.creativesoul.fiscalizacao.entity.Erros</class>
-		<class>br.com.creativesoul.fiscalizacao.entity.Fiscalizacao</class>
-		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/creativesoul" />

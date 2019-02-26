@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+
 import br.com.creativesoul.fiscalizacao.entity.Bairro;
 
 public class BairroDao implements Serializable {

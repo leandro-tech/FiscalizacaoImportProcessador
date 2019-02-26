@@ -1,6 +1,7 @@
 package br.com.creativesoul.fiscalizacao.dao;
 
 import java.io.Serializable;
+
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
