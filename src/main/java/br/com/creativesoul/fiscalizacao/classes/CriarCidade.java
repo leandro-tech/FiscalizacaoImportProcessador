@@ -3,30 +3,26 @@ package br.com.creativesoul.fiscalizacao.classes;
 import javax.persistence.EntityManager;
 
 import br.com.creativesoul.fiscalizacao.dao.CidadeDao;
-import br.com.creativesoul.fiscalizacao.dao.DAO;
 import br.com.creativesoul.fiscalizacao.entity.Cidade;
 import br.com.creativesoul.fiscalizacao.entity.Uf;
 
 public class CriarCidade {
 	
-	CidadeDao cidadeDao = new CidadeDao();
-	Cidade cidade = new Cidade();
-	
-	public CriarCidade(EntityManager em, String nomeCidade, Uf uf) {		
-		DAO<Cidade> dao = new DAO<>(em, Cidade.class);
-		cidade.setNome(nomeCidade);
-		cidade.setUf(uf);
+	public Cidade criarCidade(EntityManager em, String nomeCidade, Uf uf) {
 		
-		if(!cidadeDao.checkCidade(em, cidade)) {
-			dao.add(cidade);		
+		if(nomeCidade.equals("Sem Informação")) {
+			return null;
 		}
-		else {
-			cidade = cidadeDao.cidadeExistente();
-		}		
+		
+		CidadeDao cidadeDao = new CidadeDao(em);
+		Cidade cidade = cidadeDao.buscaPorCidade(nomeCidade);
+		
+    	if(cidade == null) {
+    		cidade = new Cidade();
+    		cidade.setNome(nomeCidade);
+    		cidade.setUf(uf);
+    		cidadeDao.add(cidade);
+    	}
+    	return cidade;
 	}
-	
-	public Cidade getCidade() {
-		return cidade;
-	}
-	
 }

@@ -3,41 +3,28 @@ package br.com.creativesoul.fiscalizacao.classes;
 import javax.persistence.EntityManager;
 
 import br.com.creativesoul.fiscalizacao.dao.BairroDao;
-import br.com.creativesoul.fiscalizacao.dao.DAO;
 import br.com.creativesoul.fiscalizacao.entity.Bairro;
 import br.com.creativesoul.fiscalizacao.entity.Cidade;
 import br.com.creativesoul.fiscalizacao.entity.Uf;
 
 public class CriarBairro {
 	
-	BairroDao bairroDao = new BairroDao();
-	Bairro bairro = new Bairro();
-	
-	public CriarBairro(EntityManager em, String nomeBairro, Cidade cidade, Uf uf) {	
-		DAO<Bairro> dao = new DAO<>(em, Bairro.class);
-		bairro.setNome(nomeBairro);
-		bairro.setCidade(cidade);
-		bairro.setUf(uf);
+	public Bairro criarBairro(EntityManager em, String nomeBairro, Cidade cidade, Uf uf) {
 		
-		if(!bairroDao.checkBairro(em, bairro)) {
-			dao.add(bairro);	
+		if(nomeBairro.equals("Sem Informação")) {
+			return null;
 		}
-		else {
-			bairro = bairroDao.bairroExistente();
-		}
+		
+		BairroDao bairroDao = new BairroDao(em);
+		Bairro bairro = bairroDao.buscaPorBairro(nomeBairro, cidade.getId(), uf.getId());
+		
+    	if(bairro == null) {
+    		bairro = new Bairro();
+    		bairro.setNome(nomeBairro);
+    		bairro.setCidade(cidade);
+    		bairro.setUf(uf);
+    		bairroDao.add(bairro);
+    	}
+    	return bairro;
 	}
-	
-	public Bairro getBairro() {
-		return bairro;
-	}
-	
-	public Cidade getCidade() {
-		return bairro.getCidade();
-	}
-	
-	public Uf getUf() {
-		return bairro.getUf();
-	}
-	
-	
 }

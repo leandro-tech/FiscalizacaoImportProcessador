@@ -11,35 +11,41 @@ import br.com.creativesoul.fiscalizacao.entity.Cidade;
 public class CidadeDao implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	private Cidade resultado;
 	
-	public boolean checkCidade(EntityManager em, Cidade cidade) {
-		
-			StringBuilder jpql = new StringBuilder();
-			jpql.append(" select u from Cidade u");
-			jpql.append("     join u.uf d");
-			jpql.append(" where ");
-			jpql.append("	u.nome = :pNome ");
-			jpql.append(" 	and d.id = :pUf");
-			
-			TypedQuery<Cidade> query = em.createQuery(jpql.toString(), Cidade.class);
-			
-			query.setParameter("pNome", cidade.getNome());
-			query.setParameter("pUf", cidade.getUf().getId());
-			try {
-				resultado = query.getSingleResult();	
-				return true;
-		    } catch (Exception e) {
-		        return false;
-		    }
+	private final DAO<Cidade> dao;
+	private final  EntityManager em;
+
+	public CidadeDao(EntityManager em) {
+		this.em = em;
+		this.dao = new DAO<Cidade>(em, Cidade.class);
+	}
+
+	public void add(Cidade objeto) {
+		dao.add(objeto);
+	}
+
+	public void update(Cidade objeto) {
+		dao.update(objeto);
+	}
+
+	public Cidade buscaPorId(Long id) {
+		return dao.buscaPorId(id);
 	}
 	
-	public Cidade cidadeExistente() {		
+	public Cidade buscaPorCidade(String cidade) {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append(" select u from Cidade u ");
+		jpql.append(" where ");
+		jpql.append("   u.nome = :pCidade ");
+
+		TypedQuery<Cidade> query = em.createQuery(jpql.toString(), Cidade.class);
+
+		query.setParameter("pCidade", cidade);
 		try {
-			return resultado;
-	    } catch (Exception e) {
-	        return null;
-	    }
+			return query.getSingleResult();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 }

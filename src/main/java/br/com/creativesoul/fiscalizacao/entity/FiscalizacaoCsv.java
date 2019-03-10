@@ -5,10 +5,6 @@ import java.util.StringTokenizer;
 
 import javax.persistence.EntityManager;
 
-import br.com.creativesoul.fiscalizacao.classes.CriarBairro;
-import br.com.creativesoul.fiscalizacao.classes.CriarCidade;
-import br.com.creativesoul.fiscalizacao.classes.CriarErro;
-import br.com.creativesoul.fiscalizacao.classes.CriarUF;
 import br.com.creativesoul.fiscalizacao.classes.LastFriday;
 import br.com.creativesoul.fiscalizacao.classes.ValidarCNPJ;
 
@@ -21,13 +17,15 @@ public class FiscalizacaoCsv {
 	private String razao;
 	private String logradouro;
 	private String cep;
-	private Uf uf;
-	private Cidade cidade;
-	private Bairro bairro;
+	private String bairro;
+	private String cidade;
+	private String uf;
+	
+	String[] content;
 	
 	public FiscalizacaoCsv(EntityManager em, String linha) {
 		String csvDivisor = ";";
-		String[] content = linha.split(csvDivisor);		
+		content = linha.split(csvDivisor);		
 		
 		ValidarCNPJ validadorCnpj = new ValidarCNPJ();
 		cnpj = validadorCnpj.isCNPJ(content[2]);	
@@ -37,36 +35,16 @@ public class FiscalizacaoCsv {
 		mes = Integer.parseInt(st.nextToken("/"));		
 		LastFriday lastFriday = new LastFriday(ano, mes);
 		data = lastFriday.getData();
-		
 		razao = content[3].replaceAll("\"","");
-		
 		logradouro = content[4];
-		
 		cep = content[5];
-		
-		CriarUF ufBuilder = new CriarUF(em, content[8]);
-		uf = ufBuilder.getUf();
-		
-		CriarCidade cidadeBuilder = new CriarCidade(em, content[7], uf);
-		cidade = cidadeBuilder.getCidade();
-		
-		CriarBairro bairroBuilder = new CriarBairro(em, content[6], cidade, uf);
-		bairro = bairroBuilder.getBairro();
-		
-		if(cnpj == null) {
-			@SuppressWarnings("unused")
-			CriarErro erro = new CriarErro(
-					em,
-					content[0], 
-					content[1],
-					content[2], 
-					content[3], 
-					content[4], 
-					content[5], 
-					content[6], 
-					content[7], 
-					content[8]);
-		}
+		bairro = content[6];
+		cidade = content[7];
+		uf = content[8];
+	}
+	
+	public String[] getConteudoOriginal() {
+		return content;
 	}
 	
 	public int getAno() {		
@@ -97,15 +75,15 @@ public class FiscalizacaoCsv {
 		return cep;
 	}
 	
-	public Uf getUf() {
+	public String getUf() {
 		return uf;
 	}
 	
-	public Cidade getCidade() {
+	public String getCidade() {
 		return cidade;
 	}
 	
-	public Bairro getBairro() {
+	public String getBairro() {
 		return bairro;
 	}
 	
