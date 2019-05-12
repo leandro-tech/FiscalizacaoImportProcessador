@@ -9,43 +9,42 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_fiscalizacao")
+@Table(name = "tb_fiscalizacao")
 public class Fiscalizacao implements Serializable {
-	
-private static final long serialVersionUID = 1L;
-	
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
-	@Column(name = "id")	
+
+	@Column(name = "id")
 	private Long id;
-	
+
 	@Column(name = "data", nullable = false)
 	private LocalDate data;
-	
+
 	@Column(name = "razao", nullable = true, unique = false)
 	private String razao;
-	
+
 	@Column(name = "logradouro", nullable = true, unique = false)
 	private String logradouro;
-	
+
 	@Column(name = "cep", length = 12, nullable = true, unique = false)
 	private String cep;
-	
+
 	@ManyToOne
 	private Bairro bairro;
-	
+
 	@ManyToOne
 	private Cidade cidade;
-	
+
 	@ManyToOne
 	private Uf uf;
-	
-	@OneToOne
+
+	@ManyToOne
 	private Empresa empresa;
 
 	public Long getId() {

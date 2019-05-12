@@ -32,15 +32,18 @@ public class CidadeDao implements Serializable {
 		return dao.buscaPorId(id);
 	}
 	
-	public Cidade buscaPorCidade(String cidade) {
+	public Cidade buscaPorCidadeEUf(String cidade, Long id_uf) {
 		StringBuilder jpql = new StringBuilder();
 		jpql.append(" select u from Cidade u ");
+		jpql.append(" 				join u.uf b ");
 		jpql.append(" where ");
 		jpql.append("   u.nome = :pCidade ");
+		jpql.append("   and b.id = :pUf ");
 
 		TypedQuery<Cidade> query = em.createQuery(jpql.toString(), Cidade.class);
 
 		query.setParameter("pCidade", cidade);
+		query.setParameter("pUf", id_uf);
 		try {
 			return query.getSingleResult();
 		} catch (Exception e) {

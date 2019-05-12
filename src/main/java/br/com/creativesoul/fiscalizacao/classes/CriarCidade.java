@@ -15,7 +15,7 @@ public class CriarCidade {
 		}
 		
 		CidadeDao cidadeDao = new CidadeDao(em);
-		Cidade cidade = cidadeDao.buscaPorCidade(nomeCidade);
+		Cidade cidade = cidadeDao.buscaPorCidadeEUf(nomeCidade, uf.getId());
 		
     	if(cidade == null) {
     		cidade = new Cidade();

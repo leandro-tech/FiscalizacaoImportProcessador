@@ -7,27 +7,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_bairro")
+@Table(name = "tb_bairro")
 public class Bairro implements Serializable {
 
-private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")	
+	@Column(name = "id")
 	private Long id;
-	
 	@Column(name = "nome", length = 120, nullable = false, unique = false)
 	private String nome;
-	
-	@OneToOne
+	@ManyToOne
+	@JoinColumn(name = "cidade_id")
 	private Cidade cidade;
-	
-	@OneToOne
+	@ManyToOne
+	@JoinColumn(name = "uf_id")
 	private Uf uf;
 
 	public Long getId() {
@@ -45,7 +44,7 @@ private static final long serialVersionUID = 1L;
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 	public Cidade getCidade() {
 		return cidade;
 	}
@@ -53,7 +52,7 @@ private static final long serialVersionUID = 1L;
 	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
 	}
-	
+
 	public Uf getUf() {
 		return uf;
 	}
@@ -70,10 +69,7 @@ private static final long serialVersionUID = 1L;
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cidade == null) ? 0 : cidade.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((uf == null) ? 0 : uf.hashCode());
 		return result;
 	}
 
@@ -86,25 +82,10 @@ private static final long serialVersionUID = 1L;
 		if (getClass() != obj.getClass())
 			return false;
 		Bairro other = (Bairro) obj;
-		if (cidade == null) {
-			if (other.cidade != null)
-				return false;
-		} else if (!cidade.equals(other.cidade))
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		if (uf == null) {
-			if (other.uf != null)
-				return false;
-		} else if (!uf.equals(other.uf))
 			return false;
 		return true;
 	}

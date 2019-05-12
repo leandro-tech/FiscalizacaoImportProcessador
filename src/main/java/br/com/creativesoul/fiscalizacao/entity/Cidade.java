@@ -1,13 +1,17 @@
 package br.com.creativesoul.fiscalizacao.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,15 +22,15 @@ public class Cidade implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	@Column(name = "id")	
 	private Long id;
-	
 	@Column(name = "nome", length = 120, nullable = false, unique = false)
 	private String nome;
-	
-	@OneToOne
+	@ManyToOne
+	@JoinColumn(name="uf_id")
 	private Uf uf;
+	@OneToMany(mappedBy="cidade")
+	private List<Bairro> bairros = new ArrayList<Bairro>();
 
 	public Long getId() {
 		return id;
@@ -61,8 +65,6 @@ public class Cidade implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((uf == null) ? 0 : uf.hashCode());
 		return result;
 	}
 
@@ -80,18 +82,7 @@ public class Cidade implements Serializable {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		if (uf == null) {
-			if (other.uf != null)
-				return false;
-		} else if (!uf.equals(other.uf))
-			return false;
 		return true;
 	}
 
-	
 }

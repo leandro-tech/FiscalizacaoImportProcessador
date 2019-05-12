@@ -7,16 +7,14 @@ import br.com.creativesoul.fiscalizacao.entity.Uf;
 
 public class CriarUF {
 	
-	public Uf criarUF(EntityManager em, String nomeUF) {
+	public Uf criarUF(EntityManager em, String nomeUF, String sigla) {
 		
 		if(nomeUF.equals("Sem Informação")) {
 			return null;
 		}
 		
 		UfDao ufDao = new UfDao(em);
-		String sigla = obterUf(nomeUF);	
-		
-		Uf uf = ufDao.buscaPorSigla(sigla);
+		Uf uf = ufDao.buscaPorNome(nomeUF);
 		
     	if(uf == null) {
     		uf = new Uf();
@@ -26,17 +24,5 @@ public class CriarUF {
     	}
     	return uf;
  	}
-	
-	public String obterUf(String nomeUF) {		
-    	String siglaUF = "";
-        String[] separador = nomeUF.split(" "); 
-        for (int i = 0; i < separador.length; i++) {
-            String s = separador[i];
-            if(i+1 <= 2) {
-            	siglaUF = siglaUF.concat(String.valueOf(s.charAt(0)));
-            }	                
-        }
-		return siglaUF;
-	}
 	
 }

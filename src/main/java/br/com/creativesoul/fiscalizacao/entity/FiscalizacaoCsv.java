@@ -25,7 +25,14 @@ public class FiscalizacaoCsv {
 	
 	public FiscalizacaoCsv(EntityManager em, String linha) {
 		String csvDivisor = ";";
+		
+		content = null;
 		content = linha.split(csvDivisor);		
+		
+		if(content.length > 9) {
+			System.out.println("Linha inválida.");
+			return;
+		}
 		
 		ValidarCNPJ validadorCnpj = new ValidarCNPJ();
 		cnpj = validadorCnpj.isCNPJ(content[2]);	

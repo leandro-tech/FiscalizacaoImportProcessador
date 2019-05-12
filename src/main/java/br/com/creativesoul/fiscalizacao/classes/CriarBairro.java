@@ -17,7 +17,6 @@ public class CriarBairro {
 		
 		BairroDao bairroDao = new BairroDao(em);
 		Bairro bairro = bairroDao.buscaPorBairro(nomeBairro, cidade.getId(), uf.getId());
-		
     	if(bairro == null) {
     		bairro = new Bairro();
     		bairro.setNome(nomeBairro);

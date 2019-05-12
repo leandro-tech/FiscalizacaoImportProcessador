@@ -6,9 +6,11 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
+		System.out.println("Início do processamento");
 		LeituraArquivo file = new LeituraArquivo();
-		file.read();
-		
+		file.readUf();
+		file.readFiscalizacao();
+		System.out.println("Fim do processamento");
 		System.exit(0);
 	}
 	
