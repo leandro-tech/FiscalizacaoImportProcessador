@@ -1,14 +1,12 @@
 package br.com.creativesoul.fiscalizacao.entity;
 
-import javax.persistence.EntityManager;
-
 public class UfCsv {
 	
 	private String sigla;
 	private String nome;
 	String[] content;
 	
-	public UfCsv(EntityManager em, String linha) {
+	public UfCsv(String linha) {
 		String csvDivisor = ";";
 
 		content = null;

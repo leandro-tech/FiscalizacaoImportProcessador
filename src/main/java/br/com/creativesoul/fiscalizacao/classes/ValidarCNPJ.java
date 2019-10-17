@@ -2,9 +2,14 @@ package br.com.creativesoul.fiscalizacao.classes;
 
 
 public class ValidarCNPJ {
-	
+		
+	  private String cnpjValidado;
+	  
+	  public String getCnpjValidado() {
+		  return cnpjValidado;
+	  }
+	  
 	  public String isCNPJ(String cnpj) {
-		  
 		  cnpj = cnpj.replaceAll("-","").replaceAll("/","").replaceAll("\\.","").replaceAll(" ", "");
 		  
 		  if ((cnpj.length() != 14))
@@ -16,10 +21,12 @@ public class ValidarCNPJ {
 	      char digito13 = calculaPrimeiroValidadorDoCnpj(cnpj);
 	      char digito14 = calculaSegundoValidadorDoCnpj(cnpj);
 	      
-	      if ((digito13 == cnpj.charAt(12)) && (digito14 == cnpj.charAt(13))) 
-	    	  return aplicaMascaraNoCnpj(cnpj);
-	       else 
+	      if ((digito13 == cnpj.charAt(12)) && (digito14 == cnpj.charAt(13))) {
+	    	  return cnpjValidado = aplicaMascaraNoCnpj(cnpj);
+	      }
+	       else {
 	    	  return null;
+	       }
 	  }
 
 	private String aplicaMascaraNoCnpj(String cnpj) {

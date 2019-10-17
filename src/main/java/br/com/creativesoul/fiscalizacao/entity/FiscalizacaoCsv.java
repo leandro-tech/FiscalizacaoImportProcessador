@@ -3,8 +3,6 @@ package br.com.creativesoul.fiscalizacao.entity;
 import java.time.LocalDate;
 import java.util.StringTokenizer;
 
-import javax.persistence.EntityManager;
-
 import br.com.creativesoul.fiscalizacao.classes.LastFriday;
 import br.com.creativesoul.fiscalizacao.classes.ValidarCNPJ;
 
@@ -21,15 +19,16 @@ public class FiscalizacaoCsv {
 	private String cidade;
 	private String uf;
 	
-	String[] content;
+	private String[] content;
+	private final String csvDivisor = ";";
 	
-	public FiscalizacaoCsv(EntityManager em, String linha) {
-		String csvDivisor = ";";
+	private boolean valido = false;
+	
+	public FiscalizacaoCsv(String linha) {
 		
-		content = null;
 		content = linha.split(csvDivisor);		
 		
-		if(content.length > 9) {
+		if(content.length != 9) {
 			System.out.println("Linha inválida.");
 			return;
 		}
@@ -37,61 +36,57 @@ public class FiscalizacaoCsv {
 		ValidarCNPJ validadorCnpj = new ValidarCNPJ();
 		cnpj = validadorCnpj.isCNPJ(content[2]);	
 		
+		cnpj = content[2];
 		StringTokenizer st = new StringTokenizer(content[1]);
 		ano = Integer.parseInt(st.nextToken("/"));
 		mes = Integer.parseInt(st.nextToken("/"));		
 		LastFriday lastFriday = new LastFriday(ano, mes);
 		data = lastFriday.getData();
-		razao = content[3].replaceAll("\"","");
+		razao = content[3].replaceAll("\"","").toUpperCase();
 		logradouro = content[4];
 		cep = content[5];
-		bairro = content[6];
-		cidade = content[7];
-		uf = content[8];
+		bairro = content[6].toUpperCase();
+		cidade = content[7].toUpperCase();
+		uf = content[8].toUpperCase();
+		valido = true;
 	}
 	
-	public String[] getConteudoOriginal() {
+	public String[] getFiscalizacao() {
 		return content;
 	}
 	
 	public int getAno() {		
 		return ano;
 	}
-
 	public int getMes() {
 		return mes;
 	}
-	
 	public String getCnpj() {
 		return cnpj;
 	}
-	
 	public LocalDate getData() {
 		return data;
 	}
-	
 	public String getRazao() {
 		return razao;
 	}
-	
 	public String getLogradouro() {
 		return logradouro;
 	}
-	
 	public String getCep() {
 		return cep;
 	}
-	
 	public String getUf() {
 		return uf;
 	}
-	
 	public String getCidade() {
 		return cidade;
 	}
-	
 	public String getBairro() {
 		return bairro;
+	}
+	public boolean isValido() {
+		return valido;
 	}
 	
 }

@@ -3,16 +3,18 @@ package br.com.creativesoul.fiscalizacao.dao;
 import java.io.Serializable;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import br.com.creativesoul.fiscalizacao.entity.Bairro;
+import br.com.creativesoul.fiscalizacao.entity.Cidade;
 
 public class BairroDao implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	private final DAO<Bairro> dao;
-	private final  EntityManager em;
+	private final EntityManager em;
 
 	public BairroDao(EntityManager em) {
 		this.em = em;
@@ -52,4 +54,30 @@ public class BairroDao implements Serializable {
 			return null;
 		}
 	}
+
+	public Bairro buscaPorNome(Cidade cidade, String bairro) {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append(" select b from Bairro b");
+		jpql.append(" where ");
+		jpql.append("   b.nome = :pNome ");
+		jpql.append("   and b.cidade = :pCidade");
+		
+		TypedQuery<Bairro> query = em.createQuery(jpql.toString(), Bairro.class);
+		query.setParameter("pNome", bairro);
+		query.setParameter("pCidade", cidade);
+		try {
+			return query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	public boolean existeBairro(Cidade cidade, String bairro) {
+		return (buscaPorNome(cidade, bairro) != null);
+	}
+
+	public boolean naoExisteBairro(Cidade cidade, String bairro) {
+		return !existeBairro(cidade, bairro);
+	}
+	
 }

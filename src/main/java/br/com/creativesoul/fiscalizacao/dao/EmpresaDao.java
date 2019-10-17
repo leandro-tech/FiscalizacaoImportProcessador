@@ -12,7 +12,7 @@ public class EmpresaDao implements Serializable {
 	private static final long serialVersionUID = 1L;	
 	
 	private final DAO<Empresa> dao;
-	private final  EntityManager em;
+	private final EntityManager em;
 
 	public EmpresaDao(EntityManager em) {
 		this.em = em;
